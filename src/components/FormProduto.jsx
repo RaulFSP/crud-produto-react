@@ -1,17 +1,23 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import FormularioInput from "./FormularioInput"
 import FormularioTextArea from "./FormularioTextArea"
 import ButtonOutline from "./ButtonOutline"
+import { ProdutoContext } from "../context/ProdutoContext"
 
-function FormProduto({ onProdutoFormSubmit }) {
+function FormProduto() {
     const [produtoNome, setProdutoNome] = useState("")
     const [produtoPreco, setProdutoPreco] = useState(0.0)
     const [produtoDescricao, setProdutoDescricao] = useState("")
-
+    const { addProduto } = useContext(ProdutoContext)
     return (
         <form onSubmit={(e) => {
             e.preventDefault()
-            onProdutoFormSubmit(produtoNome, produtoPreco, produtoDescricao)
+            const novoProduto = {
+                nome: produtoNome,
+                preco: produtoPreco,
+                descricao: produtoDescricao
+            }
+            addProduto(novoProduto)
         }}>
             <FormularioInput
                 label={"Nome do Produto"}
